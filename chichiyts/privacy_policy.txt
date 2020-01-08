@@ -1,0 +1,2 @@
+Thank you for using Chichi YTS. This app does not collect any personal data.
+However, it uses API from https://yts.lt to list movies, which has a User Agreement as https://yts.lt/terms, and https://subscene.com to provide subtitles, which has a Legal Information at https://subscene.com/site/legal-information.
