@@ -1,0 +1,96 @@
+<html>
+<style type="text/css">
+    html,
+    body {
+        /*margin: 0;*/
+        /*padding: 0;*/
+        background-color: #777;
+        /*overflow: hidden;*/
+        /*position: fixed*/
+    }
+    #video {
+        width: 50vw;
+        height: 50vw;
+        top: 0;
+        left: 0;
+    }
+    #slider {
+        width: 50vw;
+    }
+    .img-zoom-lens {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        background-color: #ff0000;
+        /*set the size of the lens:*/
+        width: 40px;
+        height: 40px;
+    }
+    #roi {
+        position: absolute;
+        left: 400;
+        top: 100;
+        width: 300px;
+        height: 300px;
+        background-color: #f00;
+        opacity: 0.5;
+    }
+</style>
+<body>
+    <div id="roi"></div>
+    <div id="debug" style="color:red;"></div>
+    <button onclick="alert('test')">btn</button>
+    <script type="text/javascript">
+        var roi = document.getElementById('roi');
+        document.addEventListener("touchstart", handleTouch);
+        document.addEventListener("touchmove", handleTouch);
+        document.addEventListener("touchend", touchEnd);
+
+        function handleTouch(e) {
+            if (e.touches.length != 2)
+                return;
+
+            try {
+                /*prevent any other actions that may occur when moving over the image:*/
+                e.preventDefault();
+
+                // var touches = [];
+                // for(var i=0; i<e.touches.length;i++){
+                //     var touch = e.touches[i];
+                //     touches.push({
+                //         clientX: touch.clientX,
+                //         clientY: touch.clientY,
+                //         force: touch.force,
+                //         identifier: touch.identifier,
+                //         pageX: touch.pageX,
+                //         pageY: touch.pageY,
+                //         radiusX: touch.radiusX,
+                //         radiusY: touch.radiusY,
+                //         rotationAngle: touch.rotationAngle,
+                //         screenX: touch.screenX,
+                //         screenY: touch.screenY,
+                //     })
+                // }
+                // debug.innerHTML = JSON.stringify(touches, null, 2);
+
+                const touch0 = e.touches[0];
+                const touch1 = e.touches[1];
+                const left = Math.min(touch0.pageX, touch1.pageX);
+                const top = Math.min(touch0.pageY, touch1.pageY);
+                const width = Math.abs(touch0.pageX - touch1.pageX);
+                const height = Math.abs(touch0.pageY - touch1.pageY);
+                roi.style.backgroundColor = '#0f0';
+                roi.style.left = left;
+                roi.style.top = top;
+                roi.style.width = width;
+                roi.style.height = height;
+            }
+            catch (err) {
+                debug.innerHTML = err;
+            }
+        }
+
+        function touchEnd() {
+            roi.style.backgroundColor = '#f00';
+        }
+    </script>
+</body>
