@@ -78,8 +78,8 @@
                 const top = Math.min(touch0.pageY, touch1.pageY);
                 const width = Math.abs(touch0.pageX - touch1.pageX);
                 const height = Math.abs(touch0.pageY - touch1.pageY);
-                const scaleWidth = (width - rw)/rw;
-                const scaleHeight = (height - rh)/rh;
+                const scaleWidth = width/rw;
+                const scaleHeight = height/rh;
                 roi.style.backgroundColor = '#0f0';
                 // roi.style.left = left;
                 // roi.style.top = top;
