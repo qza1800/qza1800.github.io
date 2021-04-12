@@ -41,11 +41,35 @@
     <button onclick="alert('test')">btn</button>
     <script type="text/javascript">
         var roi = document.getElementById('roi');
-        document.addEventListener("touchstart", handleTouch);
-        document.addEventListener("touchmove", handleTouch);
+        document.addEventListener("touchstart", touchStart);
+        document.addEventListener("touchmove", touchMove);
         document.addEventListener("touchend", touchEnd);
-        var changed = false;
-        function handleTouch(e) {
+
+        function touchStart(e) {
+            if (e.touches.length != 2)
+                return;
+
+            try {
+                e.preventDefault();
+
+                const touch0 = e.touches[0];
+                const touch1 = e.touches[1];
+                const left = Math.min(touch0.pageX, touch1.pageX);
+                const top = Math.min(touch0.pageY, touch1.pageY);
+                const width = Math.abs(touch0.pageX - touch1.pageX);
+                const height = Math.abs(touch0.pageY - touch1.pageY);
+                roi.style.backgroundColor = '#0ff';
+                roi.style.left = left;
+                roi.style.top = top;
+                roi.style.width = width;
+                roi.style.height = height;
+            }
+            catch (err) {
+                debug.innerHTML = err;
+            }
+        }
+
+        function touchMove(e) {
             if (e.touches.length != 2)
                 return;
 
@@ -78,11 +102,7 @@
                 const top = Math.min(touch0.pageY, touch1.pageY);
                 const width = Math.abs(touch0.pageX - touch1.pageX);
                 const height = Math.abs(touch0.pageY - touch1.pageY);
-                if (!changed) {
-                    roi.style.backgroundColor = '#0f0';
-                    changed = true;
-                }
-
+                roi.style.backgroundColor = '#0f0';
                 roi.style.left = left;
                 roi.style.top = top;
                 roi.style.width = width;
@@ -95,7 +115,6 @@
 
         function touchEnd() {
             roi.style.backgroundColor = '#f00';
-            changed = false;
         }
     </script>
 </body>
