@@ -85,8 +85,8 @@
                 const scaleWidth = width/w;
                 const scaleHeight = height/h;
                 roi.style.backgroundColor = '#0f0';
-                // roi.style.left = left;
-                // roi.style.top = top;
+                roi.style.left = rl + (left-l)*scaleWidth;
+                roi.style.top = rt + (top-t)*scaleHeight;
                 roi.style.width = rw * scaleWidth;
                 roi.style.height = rh * scaleHeight;
                 debug.innerHTML = roi.style.width + 'x' + roi.style.height;
