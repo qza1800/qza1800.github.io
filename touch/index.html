@@ -27,10 +27,6 @@
     }
     #roi {
         position: absolute;
-        left: 400;
-        top: 100;
-        width: 300px;
-        height: 300px;
         background-color: #f00;
         opacity: 0.5;
     }
@@ -41,6 +37,11 @@
     <button onclick="alert('test')">btn</button>
     <script type="text/javascript">
         var roi = document.getElementById('roi');
+        var rw, rh, rl, rt;
+        roi.style.width = '100px';
+        roi.style.height = '100px';
+        roi.style.left = '150px';
+        roi.style.top = '300px';
         document.addEventListener("touchstart", touchStart);
         document.addEventListener("touchmove", touchMove);
         document.addEventListener("touchend", touchEnd);
@@ -54,15 +55,10 @@
 
                 const touch0 = e.touches[0];
                 const touch1 = e.touches[1];
-                const left = Math.min(touch0.pageX, touch1.pageX);
-                const top = Math.min(touch0.pageY, touch1.pageY);
-                const width = Math.abs(touch0.pageX - touch1.pageX);
-                const height = Math.abs(touch0.pageY - touch1.pageY);
-                roi.style.backgroundColor = '#fff';
-                roi.style.left = left;
-                roi.style.top = top;
-                roi.style.width = width;
-                roi.style.height = height;
+                rl = Math.min(touch0.pageX, touch1.pageX);
+                rt = Math.min(touch0.pageY, touch1.pageY);
+                rw = Math.abs(touch0.pageX - touch1.pageX);
+                rh = Math.abs(touch0.pageY - touch1.pageY);
             }
             catch (err) {
                 debug.innerHTML = err;
@@ -74,27 +70,7 @@
                 return;
 
             try {
-                /*prevent any other actions that may occur when moving over the image:*/
                 e.preventDefault();
-
-                // var touches = [];
-                // for(var i=0; i<e.touches.length;i++){
-                //     var touch = e.touches[i];
-                //     touches.push({
-                //         clientX: touch.clientX,
-                //         clientY: touch.clientY,
-                //         force: touch.force,
-                //         identifier: touch.identifier,
-                //         pageX: touch.pageX,
-                //         pageY: touch.pageY,
-                //         radiusX: touch.radiusX,
-                //         radiusY: touch.radiusY,
-                //         rotationAngle: touch.rotationAngle,
-                //         screenX: touch.screenX,
-                //         screenY: touch.screenY,
-                //     })
-                // }
-                // debug.innerHTML = JSON.stringify(touches, null, 2);
 
                 const touch0 = e.touches[0];
                 const touch1 = e.touches[1];
@@ -102,11 +78,13 @@
                 const top = Math.min(touch0.pageY, touch1.pageY);
                 const width = Math.abs(touch0.pageX - touch1.pageX);
                 const height = Math.abs(touch0.pageY - touch1.pageY);
+                const scaleWidth = (width - rw)/rw;
+                const scaleHeight = (height - rh)/rh;
                 roi.style.backgroundColor = '#0f0';
-                roi.style.left = left;
-                roi.style.top = top;
-                roi.style.width = width;
-                roi.style.height = height;
+                // roi.style.left = left;
+                // roi.style.top = top;
+                roi.style.width = parseFloat(roi.style.width) * scaleWidth;
+                roi.style.height = parseFloat(roi.style.height) * scaleHeight;
             }
             catch (err) {
                 debug.innerHTML = err;
