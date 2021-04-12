@@ -37,7 +37,7 @@
     <button onclick="alert('test')">btn</button>
     <script type="text/javascript">
         var roi = document.getElementById('roi');
-        var rw, rh, rl, rt;
+        var rw, rh, rl, rt, w, h, l, t;
         roi.style.width = '100px';
         roi.style.height = '100px';
         roi.style.left = '150px';
@@ -55,10 +55,14 @@
 
                 const touch0 = e.touches[0];
                 const touch1 = e.touches[1];
-                rl = Math.min(touch0.pageX, touch1.pageX);
-                rt = Math.min(touch0.pageY, touch1.pageY);
-                rw = Math.abs(touch0.pageX - touch1.pageX);
-                rh = Math.abs(touch0.pageY - touch1.pageY);
+                l = Math.min(touch0.pageX, touch1.pageX);
+                t = Math.min(touch0.pageY, touch1.pageY);
+                w = Math.abs(touch0.pageX - touch1.pageX);
+                h = Math.abs(touch0.pageY - touch1.pageY);
+                rl = parseFloat(roi.style.left);
+                rt = parseFloat(roi.style.top);
+                rw = parseFloat(roi.style.width);
+                rh = parseFloat(roi.style.height);
             }
             catch (err) {
                 debug.innerHTML = err;
@@ -83,8 +87,8 @@
                 roi.style.backgroundColor = '#0f0';
                 // roi.style.left = left;
                 // roi.style.top = top;
-                roi.style.width = parseFloat(roi.style.width) * scaleWidth;
-                roi.style.height = parseFloat(roi.style.height) * scaleHeight;
+                roi.style.width = rw * scaleWidth;
+                roi.style.height = rh * scaleHeight;
                 debug.innerHTML = roi.style.width + 'x' + roi.style.height;
             }
             catch (err) {
