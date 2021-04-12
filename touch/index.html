@@ -85,6 +85,7 @@
                 // roi.style.top = top;
                 roi.style.width = parseFloat(roi.style.width) * scaleWidth;
                 roi.style.height = parseFloat(roi.style.height) * scaleHeight;
+                debug.innerHTML = roi.style.width + 'x' + roi.style.height;
             }
             catch (err) {
                 debug.innerHTML = err;
