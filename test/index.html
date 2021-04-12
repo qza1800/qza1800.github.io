@@ -54,9 +54,9 @@
         var x = 0;
         var outer = document.getElementById('outer');
         var inner = document.getElementById('inner');
-        document.addEventListener("touchstart", moveLens);
-        document.addEventListener("touchmove", moveLens);
-        document.addEventListener("touchend", moveLens);
+        outer.addEventListener("touchstart", moveLens);
+        outer.addEventListener("touchmove", moveLens);
+        outer.addEventListener("touchend", moveLens);
 
         function moveLens(e) {
             try {
