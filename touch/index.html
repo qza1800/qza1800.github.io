@@ -44,7 +44,7 @@
         document.addEventListener("touchstart", handleTouch);
         document.addEventListener("touchmove", handleTouch);
         document.addEventListener("touchend", touchEnd);
-
+        var changed = false;
         function handleTouch(e) {
             if (e.touches.length != 2)
                 return;
@@ -78,7 +78,11 @@
                 const top = Math.min(touch0.pageY, touch1.pageY);
                 const width = Math.abs(touch0.pageX - touch1.pageX);
                 const height = Math.abs(touch0.pageY - touch1.pageY);
-                roi.style.backgroundColor = '#0f0';
+                if (!changed) {
+                    roi.style.backgroundColor = '#0f0';
+                    changed = true;
+                }
+
                 roi.style.left = left;
                 roi.style.top = top;
                 roi.style.width = width;
@@ -91,6 +95,7 @@
 
         function touchEnd() {
             roi.style.backgroundColor = '#f00';
+            changed = false;
         }
     </script>
 </body>
