@@ -31,44 +31,30 @@
         background-color: #f00;
         opacity: 0.5;
     }
-    input[type=range]::-ms-track {
-        width: 300px;
-        height: 5px;
+    .chrome {
+      input {
+        background: linear-gradient(to right, green, #005555 75%, blue);
+        border: solid 2px #444;
+        border-radius: 8px;
+        height: 10px;
 
-        /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
-        background: transparent;
+        -webkit-appearance: none;
+      }
 
-        /*leave room for the larger thumb to overflow with a transparent border */
-        border-color: transparent;
-        border-width: 6px 0;
+      input::-webkit-slider-thumb {
+        background-color: #469948;
+        border: solid 2px #dedede;
+        border-radius: 0;
 
-        /*remove default tick marks*/
-        color: transparent;
-    }
-    input[type=range]::-ms-fill-lower {
-        background: #777;
-        border-radius: 10px;
-    }
-    input[type=range]::-ms-fill-upper {
-        background: #ddd;
-        border-radius: 10px;
-    }
-    input[type=range]::-ms-thumb {
-        border: none;
-        height: 16px;
-        width: 16px;
-        border-radius: 50%;
-        background: goldenrod;
-    }
-    input[type=range]:focus::-ms-fill-lower {
-        background: #888;
-    }
-    input[type=range]:focus::-ms-fill-upper {
-        background: #ccc;
+        height: 20px;
+        width: 20px;
+
+        -webkit-appearance: none;
+      }
     }
 </style>
 <body>
-    <input id="slider" min="0" value="10" type="range">
+    <input id="slider" min="0" value="10" type="range" class="chrome">
     <div id="roi"></div>
     <div id="debug" style="color:red;"></div>
     <button onclick="alert('test')">btn</button>
