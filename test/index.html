@@ -1,91 +1,53 @@
+<!DOCTYPE html>
 <html>
-<style type="text/css">
-    html,
-    body {
-        /*margin: 0;*/
-        /*padding: 0;*/
-        background-color: #777;
-        /*overflow: hidden;*/
-        /*position: fixed*/
-    }
-    #video {
-        width: 50vw;
-        height: 50vw;
-        top: 0;
-        left: 0;
-    }
-    #slider {
-        width: 50vw;
-    }
-    .img-zoom-lens {
-        position: absolute;
-        border: 1px solid #d4d4d4;
-        background-color: #ff0000;
-        /*set the size of the lens:*/
-        width: 40px;
-        height: 40px;
-    }
-    #outer {
-        position: absolute;
-        left: 400;
-        top: 100;
-        width: 300px;
-        height: 300px;
-        background-color: #f00;
-        opacity: 0.5;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    #inner {
-        background-color: #0f0;
-        height: 50%;
-        width: 50%;
-        opacity: 0.5;
-    }
-</style>
-<body>
-    <div id="outer">
-    <div id="inner"></div>
-    </div>
-    <div id="debug" style="color:red;"></div>
-    <button onclick="alert('test')">btn</button>
-    <script type="text/javascript">
-        var x = 0;
-        var outer = document.getElementById('outer');
-        var inner = document.getElementById('inner');
-        document.addEventListener("touchstart", moveLens);
-        document.addEventListener("touchmove", moveLens);
-        document.addEventListener("touchend", moveLens);
+  <body>
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
 
-        function moveLens(e) {
-            try {
-                var pos, x, y, currentTime;
-                /*prevent any other actions that may occur when moving over the image:*/
-                e.preventDefault();
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
 
-                var touches = [];
-                for(var i=0; i<e.touches.length;i++){
-                    var touch = e.touches[i];
-                    touches.push({
-                        clientX: touch.clientX,
-                        clientY: touch.clientY,
-                        force: touch.force,
-                        identifier: touch.identifier,
-                        pageX: touch.pageX,
-                        pageY: touch.pageY,
-                        radiusX: touch.radiusX,
-                        radiusY: touch.radiusY,
-                        rotationAngle: touch.rotationAngle,
-                        screenX: touch.screenX,
-                        screenY: touch.screenY,
-                    })
-                }
-                debug.innerHTML = JSON.stringify(touches, null, 2);
-            }
-            catch (err) {
-                debug.innerHTML = err;
-            }
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: 'M7lc1UVf-VE',
+          playerVars: {
+            'playsinline': 1
+          },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
         }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
     </script>
-</body>
+  </body>
+</html>
