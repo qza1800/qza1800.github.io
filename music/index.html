@@ -4,19 +4,51 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>YT music</title>
+    <style type="text/css">
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            margin: 0 0 54px;
+            /* bottom = footer height */
+            padding: 25px;
+        }
+
+        footer {
+            background-color: orange;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            height: 54px;
+            width: 100%;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-    <input type="text" id="txtVideoId" value="KgOtLOUdCMQ"></input>
-    <button type="button" onclick="playMusic()">play</button>
-    <audio id="audio" controls="controls">
-        <source id="audioSource" src=""></source>
-        Your browser does not support the audio format.
-    </audio>
+    <div>
+        <input type="text" id="txtQuery" placeholder="Search" onkeydown="onKeyDown()"></input>
+        <button type="button" onclick="search()">search</button>
+    </div>
+    <div id="listResult">
+    </div>
+    <footer>
+        <audio id="audio" controls autoplay>
+            <source id="audioSource"></source>
+            Your browser does not support the audio format.
+        </audio>
+    </footer>
 
     <script>
+        var listResult = document.getElementById("listResult");
+        var txtQuery = document.getElementById("txtQuery");
+
         var audio = document.getElementById('audio');
         var source = document.getElementById('audioSource');
         var nextVideoId;
+        var autoPlay = true;
 
         audio.onended = function() {
             if (nextVideoId) {
@@ -24,13 +56,31 @@
             }
         }
 
-        function playMusic() {
-            var videoId = document.getElementById("txtVideoId").value;
-            play(videoId);
+        audio.onloadeddata = function() {
+            autoPlay = true;
         }
 
-        function play(videoId) {
-            fetch('https://chichi-music-api.herokuapp.com/audio/' + videoId)
+        source.onerror = function() {
+            if (source.src) {
+                if (nextVideoId && autoPlay) {
+                    play(nextVideoId);
+                }
+                else {
+                    alert('cannot play this');
+                }
+            }
+        }
+
+        function onKeyDown() {
+            if (event.key === 'Enter') {
+                search();
+            }
+        }
+
+        function search() {
+            txtQuery.blur(); // remove focus
+            var query = txtQuery.value;
+            fetch('https://chichi-music-api.herokuapp.com/search/' + encodeURI(query))
                 .then(response => response.json())
                 .then(handleApiResponse);
         }
@@ -38,10 +88,47 @@
         function handleApiResponse(res) {
             // console.log(res)
             if (res.success) {
+                // console.log(res.data);
+                clearChildren(listResult);
+                res.data.forEach(d => {
+                    listResult.appendChild(createResultElement(d));
+                })
+            }
+            else {
+                alert(res.message)
+            }
+        }
+
+        function clearChildren(elem) {
+            while (elem.firstChild) {
+                elem.removeChild(elem.lastChild);
+            }
+        }
+
+        function createResultElement(data) {
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(data.title));
+            div.onclick = function() {
+                autoPlay = false;
+                play(data.videoId);
+            }
+            return div;
+        }
+
+        function play(videoId) {
+            fetch('https://chichi-music-api.herokuapp.com/audio/' + videoId)
+                .then(response => response.json())
+                .then(handlePlayResponse);
+        }
+
+        function handlePlayResponse(res) {
+            // console.log(res)
+            if (res.success) {
                 source.src = res.data.url;
                 nextVideoId = res.data.next_video_id;
                 // console.log(source.src)
 
+                audio.pause();
                 audio.load(); //call this to just preload the audio without playing
                 audio.play(); //call this to play the song right away
             }
