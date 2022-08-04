@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>YT music</title>
+    <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css" />
     <style type="text/css">
         body {
             /* Disable scrollbars and ensure that the body fills the window */
@@ -43,6 +44,8 @@
         .result {
             background-color: rgba(0, 0, 0, 0.3);
             display: flex;
+            cursor: pointer;
+            margin: 8px;
         }
 
         .thumbnail {
@@ -55,6 +58,20 @@
 
         .title {
             font-weight: bold;
+            margin: 0px;
+            padding: 4px;
+            padding-left: 12px;
+        }
+
+        .sub-title {
+            margin: 0px;
+            padding: 4px;
+            padding-left: 12px;
+        }
+
+        .mdi {
+            cursor: pointer;
+            vertical-align: middle;
         }
     </style>
 </head>
@@ -70,9 +87,11 @@
             <source id="audioSource"></source>
             Your browser does not support the audio format.
         </audio>
+        <span id="mdi-repeat" class="mdi mdi-repeat-off" onclick="toggleRepeat(this)"></span>
     </footer>
 
     <script>
+        var loopOne = false;
         var listResult = document.getElementById("listResult");
         var txtQuery = document.getElementById("txtQuery");
 
@@ -82,8 +101,13 @@
         var autoPlay = true;
 
         audio.onended = function() {
-            if (nextVideoId) {
-                play(nextVideoId);
+            if (loopOne) {
+                audio.play()
+            }
+            else {
+                if (nextVideoId) {
+                    play(nextVideoId);
+                }
             }
         }
 
@@ -175,6 +199,19 @@
                 alert(res.message)
             }
         }
+
+        function toggleRepeat(mdi) {
+            loopOne = !loopOne;
+            if (loopOne) {
+                mdi.classList.remove("mdi-repeat-off");
+                mdi.classList.add("mdi-repeat-once");
+            }
+            else {
+                mdi.classList.remove("mdi-repeat-once");
+                mdi.classList.add("mdi-repeat-off");
+            }
+        }
   </script>
 </body>
 </html>
+
