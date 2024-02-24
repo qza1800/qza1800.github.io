@@ -42,12 +42,15 @@
     if (encodedData) {
       const data = JSON.parse(decodeURIComponent(encodedData));
       const video = document.getElementById('my-video');
-      Object.entries(data.subtitles).forEach(([id, user]) => {
+      Object.entries(data.subtitles).forEach(([id, user], idx) => {
         const track = document.createElement('track');
         track.src = `https://172.212.105.29.nip.io/subtitle?id=${id}`;
         track.kind = 'captions';
         track.srclang = data.language;
         track.label = user;
+        if (idx == 0) {
+          track.default = true
+        }
         video.appendChild(track);
       });
     }
