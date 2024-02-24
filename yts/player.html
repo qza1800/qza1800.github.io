@@ -32,12 +32,27 @@
     <!-- <source src="https://samplelib.com/lib/preview/mp4/sample-30s.mp4" /> -->
     <!-- <source src="http://localhost:5000/stream" /> -->
     <source src="https://172.212.105.29.nip.io/stream" type="video/mp4" />
-    <track kind="captions" src="https://172.212.105.29.nip.io/subtitle" srclang="en" label="abcd" default>
   </video>
 
   <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
   <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const encodedData = urlParams.get('data');
+    if (encodedData) {
+      const data = JSON.parse(decodeURIComponent(encodedData));
+      const video = document.getElementById('my-video');
+      Object.entries(data.subtitles).forEach(([id, user]) => {
+        const track = document.createElement('track');
+        track.src = `https://172.212.105.29.nip.io/subtitle?id=${id}`;
+        track.kind = 'captions';
+        track.srclang = data.language;
+        track.label = user;
+        video.appendChild(track);
+      });
+    }
+
+
     // Initialize the video player
     var player = videojs('my-video');
     player.on('loadedmetadata', function() {
