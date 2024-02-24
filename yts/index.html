@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <style>
+        /* Basic styling for the search input and list */
+        #search-input {
+            width: 300px;
+            margin-bottom: 10px;
+        }
+        #search-results {
+            list-style-type: none;
+            padding: 0;
+        }
+        #search-results li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+        }
+        #search-results li:last-child {
+            border-bottom: none;
+        }
+        .thumbnail {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+        .resolution-links a {
+            margin-right: 10px;
+        }
+        #loading-indicator {
+            display: none;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <select id="category-select">
+        <option value="">All</option>
+        <option value="Animation">Animation</option>
+        <option value="Biography">Biography</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Crime">Crime</option>
+        <option value="Documentary">Documentary</option>
+        <option value="Family">Family</option>
+        <option value="History">History</option>
+        <option value="Horror">Horror</option>
+        <option value="Romance">Romance</option>
+    </select>
+    <!-- Search input -->
+    <input type="text" id="search-input" placeholder="Search...">
+    <!-- List to display search results -->
+    <ul id="search-results"></ul>
+
+    <!-- Loading indicator -->
+    <div id="loading-indicator">Loading...</div>
+
+    <!-- Dialog for subtitle selection -->
+    <dialog id="subtitle-dialog">
+        <h2>Select Subtitle</h2>
+        <select id="subtitle-select"></select>
+        <button id="subtitle-select-btn">Select</button>
+    </dialog>
+
+    <script>
+        function showLoading() {
+            document.getElementById('loading-indicator').style.display = 'block';
+        }
+        function hideLoading() {
+            document.getElementById('loading-indicator').style.display = 'none';
+        }
+        // Function to fetch movies from the API
+        async function fetchMovies(query, category) {
+            const response = await fetch(`https://172.212.105.29.nip.io/search?query_term=${query}&genre=${category}&sort_by=download_count`);
+            return await response.json();
+        }
+
+        // Function to fetch available subtitles for a movie
+        async function fetchSubtitles(movieUrl) {
+            const response = await fetch(`https://your-api-endpoint.com/subtitles?url=${movieUrl}`);
+            const data = await response.json();
+            return data.subtitles;
+        }
+
+        // Function to display movie search results
+        function displayMovieResults(results) {
+            const resultList = document.getElementById('search-results');
+            // Clear previous results
+            resultList.innerHTML = '';
+            // Display new results
+            results.forEach(movie => {
+                const listItem = document.createElement('li');
+                // Construct HTML for movie
+                listItem.innerHTML = `
+                    <img class="thumbnail" src="${movie.thumbnail}" alt="${movie.title}">
+                    <div>
+                        <strong>${movie.title} (${movie.year})</strong>
+                        <div class="resolution-links">
+                            ${movie.links.map(link => `
+                                <a href="#" onclick="handleMovieLinkClick('${link.url}'); return false;">${link.resolution}</a>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                resultList.appendChild(listItem);
+            });
+        }
+
+        // Function to handle movie link click
+        async function handleMovieLinkClick(movieUrl) {
+            showLoading()
+            /*// Fetch available subtitles for the movie
+            const subtitles = await fetchSubtitles(movieUrl);
+            // Display the subtitle selection dialog
+            displaySubtitleDialog(subtitles);*/
+            try {
+                const response = await fetch(`https://172.212.105.29.nip.io/register?link=${movieUrl}`);
+                if (!response.ok) {
+                    throw new Error('Failed to register click');
+                }
+                // Open player.html after registering the click
+                window.open('player.html');
+            } catch (error) {
+                // console.error('Error:', error.message);
+                alert(error.message);
+            }
+            hideLoading()
+        }
+
+        // Function to display subtitle selection dialog
+        function displaySubtitleDialog(subtitles) {
+            const subtitleSelect = document.getElementById('subtitle-select');
+            subtitleSelect.innerHTML = '';
+            // Populate the select element with subtitle options
+            subtitles.forEach(subtitle => {
+                const option = document.createElement('option');
+                option.value = subtitle.url;
+                option.textContent = subtitle.language;
+                subtitleSelect.appendChild(option);
+            });
+            // Show the dialog
+            const dialog = document.getElementById('subtitle-dialog');
+            dialog.showModal();
+        }
+
+        // Function to handle subtitle selection
+        document.getElementById('subtitle-select-btn').addEventListener('click', function() {
+            const subtitleUrl = document.getElementById('subtitle-select').value;
+            // Close the dialog
+            document.getElementById('subtitle-dialog').close();
+            // Perform any further action with the selected subtitle URL
+            console.log('Selected subtitle URL:', subtitleUrl);
+        });
+
+        // Function to handle search input
+        async function handleSearch() {
+            showLoading()
+            const query = document.getElementById('search-input').value.trim();
+            const category = document.getElementById('category-select').value;
+            const results = await fetchMovies(query, category);
+            hideLoading()
+            displayMovieResults(results);
+        }
+
+        // Event listener for search input
+        document.getElementById('search-input').addEventListener('input', handleSearch);
+        document.getElementById('category-select').addEventListener('change', handleSearch);
+
+        // Initial search when the page loads
+        handleSearch();
+    </script>
+</body>
+</html>
