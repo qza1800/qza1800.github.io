@@ -31,16 +31,18 @@
   >
     <!-- <source src="https://samplelib.com/lib/preview/mp4/sample-30s.mp4" /> -->
     <!-- <source src="http://localhost:5000/stream" /> -->
-    <source src="https://172.212.105.29.nip.io/stream" />
-    <track kind="captions" src="https://172.212.105.29.nip.io/subtitle" srclang="en" label="English" default>
+    <source src="https://172.212.105.29.nip.io/stream" type="video/mp4" />
+    <track kind="captions" src="https://172.212.105.29.nip.io/subtitle" srclang="en" label="abcd" default>
   </video>
 
   <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
   <script>
     // Initialize the video player
-    setTimeout(function() {
-      var player = videojs('my-video');
-    }, 3000)
+    var player = videojs('my-video');
+    player.on('loadedmetadata', function() {
+      // Metadata loaded, you can now access metadata properties
+      console.log('Metadata loaded:', 'Duration:', player.duration(), 'Width:', player.videoWidth(), 'Height:', player.videoHeight());
+    });
   </script>
 </body>
