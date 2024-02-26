@@ -135,8 +135,8 @@
             option.textContent = "Don't show subtitle";
             subtitleSelect.appendChild(option);
 
+            window.subtitles = subtitles.subtitles || {}
             if (subtitles.subtitles) {
-                window.subtitles = subtitles.subtitles
                 // Populate the select element with subtitle options
                 Object.keys(subtitles.subtitles).forEach(language => {
                     if (language == 'English' || language == 'Vietnamese') {
