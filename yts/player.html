@@ -1,6 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-   <style>
+  <style>
     body, html {
       margin: 0;
       padding: 0;
@@ -17,6 +21,17 @@
       text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black,
                    1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
       font-size: 1.5em;
+    }
+    /* Default icon size */
+    .vjs-icon {
+      font-size: 24px; /* Adjust the default icon size as needed */
+    }
+
+    /* Larger icon size on mobile */
+    @media (max-width: 767px) {
+      .vjs-icon {
+        font-size: 48px; /* Adjust the larger icon size as needed */
+      }
     }
   </style>
 </head>
