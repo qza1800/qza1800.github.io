@@ -69,10 +69,7 @@
 
     // Initialize the video player
     const player = videojs('my-video', {
-      controlBar: {
-        // Set the duration of inactivity before the control bar starts to fade out (in milliseconds)
-        inactivityTimeout: 5000 // 5 seconds of inactivity before control bar hides
-      }
+      inactivityTimeout: 5000,
     });
     player.on('loadedmetadata', function() {
       // Metadata loaded, you can now access metadata properties
