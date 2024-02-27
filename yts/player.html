@@ -15,23 +15,18 @@
     .video-js {
       width: 100%;
       height: 100%;
-      font-size: 1.5em;
+      font-size: 1.3em;
     }
     .vjs-text-track-cue > div {
       background: transparent!important;
       text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black,
                    1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
     }
-    /* Default icon size */
-    .vjs-icon {
-      font-size: 48px; /* Adjust the default icon size as needed */
+    .video-js .vjs-time-control {
+      display: block;
     }
-
-    /* Larger icon size on mobile */
-    @media (max-width: 767px) {
-      .vjs-icon {
-        font-size: 64px; /* Adjust the larger icon size as needed */
-      }
+    .video-js .vjs-remaining-time {
+      display: none;
     }
   </style>
 </head>
