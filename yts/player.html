@@ -68,7 +68,14 @@
 
 
     // Initialize the video player
-    var player = videojs('my-video');
+    const player = videojs('my-video', {
+      controlBar: {
+        // Set the duration for the control bar to fade in (in milliseconds)
+        fadeIn: 500,
+        // Set the duration for the control bar to fade out (in milliseconds)
+        fadeOut: 5000
+      }
+    });
     player.on('loadedmetadata', function() {
       // Metadata loaded, you can now access metadata properties
       console.log('Metadata loaded:', 'Duration:', player.duration(), 'Width:', player.videoWidth(), 'Height:', player.videoHeight());
