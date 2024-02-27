@@ -70,10 +70,8 @@
     // Initialize the video player
     const player = videojs('my-video', {
       controlBar: {
-        // Set the duration for the control bar to fade in (in milliseconds)
-        fadeIn: 500,
-        // Set the duration for the control bar to fade out (in milliseconds)
-        fadeOut: 5000
+        // Set the duration of inactivity before the control bar starts to fade out (in milliseconds)
+        inactivityTimeout: 5000 // 5 seconds of inactivity before control bar hides
       }
     });
     player.on('loadedmetadata', function() {
