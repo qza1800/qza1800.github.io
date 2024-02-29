@@ -66,8 +66,8 @@
       });
     }
 
-    const hash = localStorage.getItem('hash')
-    const keyLastTime = `${hash}.lastTime`
+    const id = localStorage.getItem('id')
+    const keyLastTime = `${id}.lastTime`
 
     // Initialize the video player
     const player = videojs('my-video', {

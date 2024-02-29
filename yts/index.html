@@ -6,9 +6,16 @@
     <title>Movie Search</title>
     <style>
         /* Basic styling for the search input and list */
-        #search-input {
-            width: 300px;
-            margin-bottom: 10px;
+        .search-container {
+            display: flex;
+            width: 100%; /* You can adjust this width as needed */
+        }
+        .search-container select {
+            margin-right: 5px;
+        }
+        .search-container input[type="text"] {
+            flex: 1; /* Stretch the text input to fill remaining space */
+            width: 100%; /* Fallback for older browsers */
         }
         #search-results {
             list-style-type: none;
@@ -36,23 +43,41 @@
             margin-top: 10px;
             font-style: italic;
         }
+        #progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 96px;
+            border-radius: 0;
+            height: 5px;
+        }
+        .thumbnail-container {
+            position: relative;
+            display: inline-block;
+        }
+        .info-container {
+            vertical-align: top;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
-    <select id="category-select">
-        <option value="">All</option>
-        <option value="Animation">Animation</option>
-        <option value="Biography">Biography</option>
-        <option value="Comedy">Comedy</option>
-        <option value="Crime">Crime</option>
-        <option value="Documentary">Documentary</option>
-        <option value="Family">Family</option>
-        <option value="History">History</option>
-        <option value="Horror">Horror</option>
-        <option value="Romance">Romance</option>
-    </select>
-    <!-- Search input -->
-    <input type="text" id="search-input" placeholder="Search...">
+    <div class="search-container">
+        <select id="category-select">
+            <option value="">All</option>
+            <option value="Animation">Animation</option>
+            <option value="Biography">Biography</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Crime">Crime</option>
+            <option value="Documentary">Documentary</option>
+            <option value="Family">Family</option>
+            <option value="History">History</option>
+            <option value="Horror">Horror</option>
+            <option value="Romance">Romance</option>
+        </select>
+        <!-- Search input -->
+        <input type="text" id="search-input" placeholder="Search...">
+    </div>
 
         <!-- Loading indicator -->
     <div id="loading-indicator">Loading...</div>
@@ -86,6 +111,14 @@
             return await response.json();
         }
 
+        function getLastTime(id) {
+            const keyLastTime = `${id}.lastTime`
+            const lastTime = localStorage.getItem(keyLastTime);
+            if (lastTime) {
+                return parseFloat(lastTime)
+            }
+        }
+
         // Function to display movie search results
         function displayMovieResults(results) {
             const resultList = document.getElementById('search-results');
@@ -95,17 +128,26 @@
             // Display new results
             results.forEach((movie, index) => {
                 const listItem = document.createElement('li');
+                const lastTime = getLastTime(movie.id);
+
                 // Construct HTML for movie
+                const progress = lastTime > 0 ? `<progress id="progress" value="${lastTime}" max="${movie.runtime*60}"></progress>` : ''
                 listItem.innerHTML = `
-                    <img class="thumbnail" src="https://172.212.105.29.nip.io/proxy?url=${movie.thumbnail}" alt="${movie.title}">
                     <div>
-                        <strong>${movie.title} (${movie.year})</strong>
-                        <div class="resolution-links">
-                            ${movie.links.map(link => `
-                                <a href="#" onclick="handleMovieLinkClick('${link.url}', ${index}); return false;">${link.resolution}</a>
-                            `).join('')}
+                        <div class="thumbnail-container">
+                            <img class="thumbnail" src="https://172.212.105.29.nip.io/proxy?url=${movie.thumbnail}" alt="${movie.title}">
+                            ${progress}
                         </div>
-                    </div>
+                        <div class="info-container">
+                            <strong>${movie.title} (${movie.year})</strong>
+                            <p>${movie.genres.join(" / ")}</p>
+                            <div class="resolution-links">
+                                ${movie.links.map(link => `
+                                    <a href="#" onclick="handleMovieLinkClick('${link.url}', ${index}); return false;">${link.resolution}</a>
+                                `).join('')}
+                            </div>
+                        </div>
+                    <div>
                 `;
                 resultList.appendChild(listItem);
             });
@@ -188,8 +230,7 @@
                 }
 
                 // Open player.html after registering the click
-                const hash = movieUrl.split('/').slice(-1)[0];
-                localStorage.setItem('hash', hash)
+                localStorage.setItem('id', window.movie.id)
                 localStorage.setItem('data', JSON.stringify(data))
                 window.location.href = 'player.html';
             } catch (error) {
