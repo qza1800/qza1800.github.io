@@ -191,7 +191,7 @@
                 const hash = movieUrl.split('/').slice(-1)[0];
                 localStorage.setItem('hash', hash)
                 localStorage.setItem('data', JSON.stringify(data))
-                window.location.href = `player.html?data=${encodedData}`;
+                window.location.href = 'player.html';
             } catch (error) {
                 // console.error('Error:', error.message);
                 alert(error.message);
