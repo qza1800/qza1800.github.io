@@ -89,6 +89,8 @@
     <!-- List to display search results -->
     <ul id="search-results"></ul>
 
+    <button id="loadMoreBtn" onclick="handleLoadMore()">Load more</button>
+
     <!-- Dialog for subtitle selection -->
     <dialog id="subtitle-dialog">
         <h2>Select Subtitle</h2>
@@ -104,8 +106,8 @@
             document.getElementById('loading-indicator').style.display = 'none';
         }
         // Function to fetch movies from the API
-        async function fetchMovies(query, category) {
-            const response = await fetch(`https://172.212.105.29.nip.io/search?query_term=${query}&genre=${category}&sort_by=download_count`);
+        async function fetchMovies(query, category, page) {
+            const response = await fetch(`https://172.212.105.29.nip.io/search?query_term=${query}&genre=${category}&sort_by=download_count&page=${page}`);
             return await response.json();
         }
 
@@ -124,11 +126,14 @@
         }
 
         // Function to display movie search results
-        function displayMovieResults(results) {
+        function displayMovieResults(results, clearFirst) {
             const resultList = document.getElementById('search-results');
-            // Clear previous results
-            resultList.innerHTML = '';
-            window.movies = results;
+            if (clearFirst) {
+                // Clear previous results
+                resultList.innerHTML = '';
+                window.movies = [];
+            }
+
             // Display new results
             results.forEach((movie, index) => {
                 const listItem = document.createElement('li');
@@ -146,13 +151,15 @@
                         <div class="genres">${movie.genres.join(" / ")}</div>
                         <div class="resolution-links">
                             ${movie.links.map(link => `
-                                <a href="#" onclick="handleMovieLinkClick('${link.url}', ${index}); return false;">${link.resolution}</a>
+                                <a href="#" onclick="handleMovieLinkClick('${link.url}', ${index + window.movies.length}); return false;">${link.resolution}</a>
                             `).join('')}
                         </div>
                     </div>
                 `;
                 resultList.appendChild(listItem);
             });
+
+            window.movies = [...window.movies, ...results];
         }
 
         // Function to handle movie link click
@@ -247,9 +254,20 @@
             showLoading()
             const query = document.getElementById('search-input').value.trim();
             const category = document.getElementById('category-select').value;
-            const results = await fetchMovies(query, category);
+            window.query = query
+            window.category = category
+            window.page = 1
+            const results = await fetchMovies(query, category, window.page);
             hideLoading()
-            displayMovieResults(results);
+            displayMovieResults(results, true);
+        }
+
+        async function handleLoadMore() {
+            showLoading()
+            window.page += 1
+            const results = await fetchMovies(window.query, window.category, window.page);
+            hideLoading()
+            displayMovieResults(results, false);
         }
 
         // Event listener for search input
