@@ -68,6 +68,9 @@
     }
 
 
+    const hash = localStorage.getItem('hash')
+    const keyLastTime = `${hash}.lastTime`
+
     // Initialize the video player
     const player = videojs('my-video', {
       inactivityTimeout: 5000,
@@ -76,8 +79,6 @@
       // Metadata loaded, you can now access metadata properties
       console.log('Metadata loaded:', 'Duration:', player.duration(), 'Width:', player.videoWidth(), 'Height:', player.videoHeight());
       // Check if there's a stored time
-      const hash = localStorage.getItem('hash')
-      const keyLastTime = `${hash}.lastTime`
       var lastTime = localStorage.getItem(keyLastTime);
       if (lastTime) {
         console.log('continue from', lastTime)
