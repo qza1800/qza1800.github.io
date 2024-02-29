@@ -82,7 +82,7 @@
       var lastTime = localStorage.getItem(keyLastTime);
       if (lastTime) {
         console.log('continue from', lastTime)
-        video.currentTime(parseFloat(lastTime));
+        player.currentTime(parseFloat(lastTime));
       }
     });
 
