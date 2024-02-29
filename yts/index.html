@@ -25,7 +25,7 @@
             padding: 10px;
             border-bottom: 1px solid #ccc;
             display: flex;
-            align-items: center;
+            /*align-items: center;*/
         }
         #search-results li:last-child {
             border-bottom: none;
@@ -133,21 +133,19 @@
                 // Construct HTML for movie
                 const progress = lastTime > 0 ? `<progress id="progress" value="${lastTime}" max="${movie.runtime*60}"></progress>` : ''
                 listItem.innerHTML = `
-                    <div>
-                        <div class="thumbnail-container">
-                            <img class="thumbnail" src="https://172.212.105.29.nip.io/proxy?url=${movie.thumbnail}" alt="${movie.title}">
-                            ${progress}
+                    <div class="thumbnail-container">
+                        <img class="thumbnail" src="https://172.212.105.29.nip.io/proxy?url=${movie.thumbnail}" alt="${movie.title}">
+                        ${progress}
+                    </div>
+                    <div class="info-container">
+                        <strong>${movie.title} (${movie.year})</strong>
+                        <p>${movie.genres.join(" / ")}</p>
+                        <div class="resolution-links">
+                            ${movie.links.map(link => `
+                                <a href="#" onclick="handleMovieLinkClick('${link.url}', ${index}); return false;">${link.resolution}</a>
+                            `).join('')}
                         </div>
-                        <div class="info-container">
-                            <strong>${movie.title} (${movie.year})</strong>
-                            <p>${movie.genres.join(" / ")}</p>
-                            <div class="resolution-links">
-                                ${movie.links.map(link => `
-                                    <a href="#" onclick="handleMovieLinkClick('${link.url}', ${index}); return false;">${link.resolution}</a>
-                                `).join('')}
-                            </div>
-                        </div>
-                    <div>
+                    </div>
                 `;
                 resultList.appendChild(listItem);
             });
