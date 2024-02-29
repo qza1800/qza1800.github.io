@@ -60,6 +60,9 @@
             vertical-align: top;
             display: inline-block;
         }
+        .genres {
+            font-size: 0.8em;
+        }
     </style>
 </head>
 <body>
@@ -140,7 +143,7 @@
                     </div>
                     <div class="info-container">
                         <strong>${movie.title} (${movie.year})</strong>
-                        <p>${movie.genres.join(" / ")}</p>
+                        <div class="genres">${movie.genres.join(" / ")}</div>
                         <div class="resolution-links">
                             ${movie.links.map(link => `
                                 <a href="#" onclick="handleMovieLinkClick('${link.url}', ${index}); return false;">${link.resolution}</a>
