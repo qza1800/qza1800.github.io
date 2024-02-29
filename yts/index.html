@@ -189,6 +189,7 @@
 
                 // Open player.html after registering the click
                 const encodedData = encodeURIComponent(JSON.stringify(data));
+                localStorage.setItem('hash', movieUrl.split('/').slice(-1)[0])
                 window.location.href = `player.html?data=${encodedData}`;
             } catch (error) {
                 // console.error('Error:', error.message);
