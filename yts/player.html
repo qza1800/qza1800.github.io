@@ -29,6 +29,16 @@
     .video-js .vjs-remaining-time {
       display: none;
     }
+    #info {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      display: none; /* Initially hidden */
+    }
   </style>
 </head>
 
@@ -45,6 +55,8 @@
     <!-- <source src="http://localhost:5000/stream" type="video/mp4" /> -->
     <source src="https://172.212.105.29.nip.io/stream" type="video/mp4" />
   </video>
+
+  <div id="infoResponse"></div>
 
   <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
@@ -98,5 +110,39 @@
     player.on('timeupdate', function () {
       localStorage.setItem(keyLastTime, player.currentTime());
     });
+
+    // Variable to hold the interval ID
+    var infoInterval;
+
+    // Get reference to the API response element
+    var infoResponseElement = document.getElementById('infoResponse');
+
+    // Add event listener for waiting event
+    player.on('waiting', function() {
+        console.log('Video is buffering');
+        // Start calling API every 1 second
+        infoInterval = setInterval(getInfo, 1000);
+    });
+
+    // Add event listener for canplay event
+    player.on('canplay', function() {
+        console.log('Video can play without buffering');
+        // Stop calling API
+        clearInterval(infoInterval);
+        // Hide API response element
+        infoResponseElement.style.display = 'none';
+    });
+
+    function getInfo() {
+        // Call your API here
+        fetch('http://localhost:5000/info')
+            .then(response => response.json())
+            .then(data => {
+                // Display API response in the floating element
+                infoResponseElement.textContent = JSON.stringify(data, null, 2);
+                infoResponseElement.style.display = 'block';
+            })
+            .catch(error => console.error('Error calling API:', error));
+    }
   </script>
 </body>
