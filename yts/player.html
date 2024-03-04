@@ -30,6 +30,13 @@
     .video-js .vjs-remaining-time {
       display: none;
     }
+    .custom-button {
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -100,7 +107,7 @@
       localStorage.setItem(keyLastTime, player.currentTime());
     });
 
-    /*// Variable to hold the interval ID
+    // Variable to hold the interval ID
     var infoInterval;
 
     // Add event listener for waiting event
@@ -129,6 +136,16 @@
                 player.titleBar.update({title: JSON.stringify(data, null, 2)})
             })
             .catch(error => console.error('Error calling API:', error));
-    }*/
+    }
+
+    /*// Add a custom button to the control bar
+    var customButton = document.createElement('button');
+    customButton.className = 'custom-button';
+    customButton.innerHTML = 'Custom Button';
+    customButton.onclick = function() {
+        // Add your custom button functionality here
+        console.log('Custom button clicked');
+    };
+    player.controlBar.addChild(customButton);*/
   </script>
 </body>
