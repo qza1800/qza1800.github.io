@@ -20,7 +20,7 @@
     .vjs-text-track-cue > div {
       background: transparent!important;
       text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black,
-                   1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
+      1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
       font-size: 1.7em;
       margin-bottom: 1em;
     }
@@ -42,110 +42,131 @@
 
 <body>
   <video
-    id="my-video"
-    class="video-js"
-    controls
-    preload="auto"
-    autoplay
-    crossorigin="anonymous"
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  autoplay
+  crossorigin="anonymous"
   >
-    <!-- <source src="https://samplelib.com/lib/preview/mp4/sample-30s.mp4" /> -->
-    <!-- <source src="http://localhost:5000/stream" type="video/mp4" /> -->
-    <source src="https://172.212.105.29.nip.io/stream" type="video/mp4" />
-  </video>
+  <!-- <source src="https://samplelib.com/lib/preview/mp4/sample-30s.mp4" /> -->
+  <!-- <source src="http://localhost:5000/stream" type="video/mp4" /> -->
+  <source src="https://172.212.105.29.nip.io/stream" type="video/mp4" />
+</video>
 
-  <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
-  <script>
-    const dataItem = localStorage.getItem('data')
-    if (dataItem) {
-      const data = JSON.parse(dataItem);
-      const video = document.getElementById('my-video');
-      Object.entries(data.subtitles || []).forEach(([id, user], idx) => {
-        const track = document.createElement('track');
-        track.src = `https://172.212.105.29.nip.io/subtitle?id=${id}`;
-        track.kind = 'captions';
-        track.srclang = data.language;
-        track.label = user;
-        if (idx == 0) {
-          track.default = true
-        }
-        video.appendChild(track);
-      });
-    }
-
-    const id = localStorage.getItem('id')
-    const keyLastTime = `${id}.lastTime`
-
-    // Initialize the video player
-    const player = videojs('my-video', {
-      inactivityTimeout: 5000,
-    });
-    player.on('loadedmetadata', function() {
-      // Metadata loaded, you can now access metadata properties
-      console.log('Metadata loaded:', 'Duration:', player.duration(), 'Width:', player.videoWidth(), 'Height:', player.videoHeight());
-      // Check if there's a stored time
-      var lastTime = localStorage.getItem(keyLastTime);
-      if (lastTime) {
-        console.log('continue from', lastTime)
-        player.currentTime(parseFloat(lastTime));
+<script>
+  const dataItem = localStorage.getItem('data')
+  if (dataItem) {
+    const data = JSON.parse(dataItem);
+    const video = document.getElementById('my-video');
+    Object.entries(data.subtitles || []).forEach(([id, user], idx) => {
+      const track = document.createElement('track');
+      track.src = `https://172.212.105.29.nip.io/subtitle?id=${id}`;
+      track.kind = 'captions';
+      track.srclang = data.language;
+      track.label = user;
+      if (idx == 0) {
+        track.default = true
       }
+      video.appendChild(track);
     });
+  }
 
-    // Save current time when video is paused
-    player.on('pause', function () {
-      localStorage.setItem(keyLastTime, player.currentTime());
-    });
+  const id = localStorage.getItem('id')
+  const keyLastTime = `${id}.lastTime`
 
-    // Clear stored time when video ends
-    player.on('ended', function () {
-      localStorage.removeItem(keyLastTime);
-    });
-
-    // Save current time when elapsed time changes
-    player.on('timeupdate', function () {
-      localStorage.setItem(keyLastTime, player.currentTime());
-    });
-
-    // Variable to hold the interval ID
-    var infoInterval;
-
-    // Add event listener for waiting event
-    player.on('waiting', function() {
-        console.log('Video is buffering');
-        // Start calling API every 1 second
-        if (infoInterval) {
-          clearInterval(infoInterval)
-        }
-        infoInterval = setInterval(getInfo, 1000);
-    });
-
-    // Add event listener for canplay event
-    player.on('canplay', function() {
-        console.log('Video can play without buffering');
-        // Stop calling API
-        clearInterval(infoInterval);
-        infoInterval = null;
-    });
-
-    function getInfo() {
-        // Call your API here
-        fetch('https://172.212.105.29.nip.io/info')
-            .then(response => response.json())
-            .then(data => {
-                player.titleBar.update({title: JSON.stringify(data, null, 2)})
-            })
-            .catch(error => console.error('Error calling API:', error));
+  // Initialize the video player
+  const player = videojs('my-video', {
+    inactivityTimeout: 5000,
+  });
+  player.on('loadedmetadata', function() {
+    // Metadata loaded, you can now access metadata properties
+    console.log('Metadata loaded:', 'Duration:', player.duration(), 'Width:', player.videoWidth(), 'Height:', player.videoHeight());
+    // Check if there's a stored time
+    var lastTime = localStorage.getItem(keyLastTime);
+    if (lastTime) {
+      console.log('continue from', lastTime)
+      player.currentTime(parseFloat(lastTime));
     }
+  });
 
-    /*// Add a custom button to the control bar
-    var customButton = document.createElement('button');
-    customButton.className = 'custom-button';
-    customButton.innerHTML = 'Custom Button';
-    customButton.onclick = function() {
-        // Add your custom button functionality here
-        console.log('Custom button clicked');
-    };
-    player.controlBar.addChild(customButton);*/
-  </script>
+  // Save current time when video is paused
+  player.on('pause', function () {
+    localStorage.setItem(keyLastTime, player.currentTime());
+  });
+
+  // Clear stored time when video ends
+  player.on('ended', function () {
+    localStorage.removeItem(keyLastTime);
+  });
+
+  // Save current time when elapsed time changes
+  player.on('timeupdate', function () {
+    localStorage.setItem(keyLastTime, player.currentTime());
+  });
+
+  // Variable to hold the interval ID
+  var infoInterval;
+
+  // Add event listener for waiting event
+  player.on('waiting', function() {
+    console.log('Video is buffering');
+    // Start calling API every 1 second
+    if (infoInterval) {
+      clearInterval(infoInterval)
+    }
+    infoInterval = setInterval(getInfo, 1000);
+  });
+
+  // Add event listener for canplay event
+  player.on('canplay', function() {
+    console.log('Video can play without buffering');
+      // Stop calling API
+    clearInterval(infoInterval);
+    infoInterval = null;
+  });
+
+  function getInfo() {
+    // Call your API here
+    fetch('https://172.212.105.29.nip.io/info')
+    .then(response => response.json())
+    .then(data => {
+      player.titleBar.update({title: JSON.stringify(data, null, 2)})
+    })
+    .catch(error => console.error('Error calling API:', error));
+  }
+
+  const shiftLeft = player.controlBar.addChild('button');
+  shiftLeft.el().innerHTML = '<<'
+  shiftLeft.on('click', function() {
+    // Your button click logic here
+    console.log('+0.5');
+    shiftSubtitleTime(0.5)
+  });
+
+  const shiftRight = player.controlBar.addChild('button');
+  shiftRight.el().innerHTML = '>>'
+  shiftRight.on('click', function() {
+    // Your button click logic here
+    console.log('-0.5');
+    shiftSubtitleTime(-0.5)
+  });
+
+  function shiftSubtitleTime(offsetSeconds) {
+    var track = player.textTracks().tracks_.filter(t => t.mode == 'showing').slice(-1)[0]
+    if (track) {
+        var cues = track.cues;
+        for (var i = 0; i < cues.length; i++) {
+            var cue = cues[i];
+            cue.startTime += offsetSeconds; // Adjust start time
+            cue.endTime += offsetSeconds; // Adjust end time
+        }
+    }
+    else {
+      console.log('no TextTrack selected')
+    }
+  }
+</script>
 </body>
