@@ -111,13 +111,13 @@
     <script>
         // Function to fetch movies from the API
         async function fetchMovies(query, category, page) {
-            const response = await fetch(`https://172.212.105.29.nip.io/search?query_term=${query}&genre=${category}&sort_by=download_count&page=${page}`);
+            const response = await fetch(`https://13.60.60.204.nip.io/search?query_term=${query}&genre=${category}&sort_by=download_count&page=${page}`);
             return await response.json();
         }
 
         // Function to fetch available subtitles for a movie
         async function fetchSubtitles(title, year) {
-            const response = await fetch(`https://172.212.105.29.nip.io/subtitle_data?year=${year}&title=${title}`);
+            const response = await fetch(`https://13.60.60.204.nip.io/subtitle_data?year=${year}&title=${title}`);
             return await response.json();
         }
 
@@ -147,7 +147,7 @@
                 const progress = lastTime > 0 ? `<progress id="progress" value="${lastTime}" max="${movie.runtime*60}"></progress>` : ''
                 listItem.innerHTML = `
                     <div class="thumbnail-container">
-                        <img class="thumbnail" src="https://172.212.105.29.nip.io/proxy?url=${movie.thumbnail}" alt="${movie.title}">
+                        <img class="thumbnail" src="https://13.60.60.204.nip.io/proxy?url=${movie.thumbnail}" alt="${movie.title}">
                         ${progress}
                     </div>
                     <div class="info-container">
@@ -217,7 +217,7 @@
             console.log('Selected language:', language, ' subtitles:', subtitles);
             showStatus('registering ...')
             try {
-                const response = await fetch('https://172.212.105.29.nip.io/register', {
+                const response = await fetch('https://13.60.60.204.nip.io/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
