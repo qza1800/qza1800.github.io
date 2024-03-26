@@ -51,7 +51,7 @@
   >
   <!-- <source src="https://samplelib.com/lib/preview/mp4/sample-30s.mp4" /> -->
   <!-- <source src="http://localhost:5000/stream" type="video/mp4" /> -->
-  <source src="https://13.60.60.204.nip.io/stream" type="video/mp4" />
+  <source src="https://13.60.60.204.nip.io/yts/stream" type="video/mp4" />
 </video>
 
 <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
@@ -63,7 +63,7 @@
     const video = document.getElementById('my-video');
     Object.entries(data.subtitles || []).forEach(([id, user], idx) => {
       const track = document.createElement('track');
-      track.src = `https://13.60.60.204.nip.io/subtitle?id=${id}`;
+      track.src = `https://13.60.60.204.nip.io/yts/subtitle?id=${id}`;
       track.kind = 'captions';
       track.srclang = data.language;
       track.label = user;
@@ -130,7 +130,7 @@
 
   function getInfo() {
     // Call your API here
-    fetch('https://13.60.60.204.nip.io/info')
+    fetch('https://13.60.60.204.nip.io/yts/info')
     .then(response => response.json())
     .then(data => {
       player.titleBar.update({title: JSON.stringify(data, null, 2)})
