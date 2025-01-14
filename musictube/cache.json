@@ -1,6 +1,10 @@
 {
-  "version": 202501013,
+  "version": 202501151,
   "playlist": false,
+  "client": {
+    "clientName":"TVHTML5",
+    "clientVersion":"7.20241201.18.00"
+  },
   "c9dd45ed": "sla[0]",
   "2f238d39": "Hla[0]",
   "3bb1f723": "BNE[0]",
