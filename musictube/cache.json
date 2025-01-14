@@ -2,8 +2,8 @@
   "version": 202501151,
   "playlist": false,
   "client": {
-    "clientName":"TVHTML5",
-    "clientVersion":"7.20241201.18.00"
+    "clientName": "TVHTML5",
+    "clientVersion": "7.20241201.18.00"
   },
   "c9dd45ed": "sla[0]",
   "2f238d39": "Hla[0]",
@@ -63,6 +63,10 @@
     "0b866fa6": {
       "s": "ZXe",
       "n": "F2v[0]"
+    },
+    "6e1dd460": {
+      "s": "v7B",
+      "n": "jVy[0]"
     }
   }
 }
