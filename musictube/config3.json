@@ -1,5 +1,5 @@
 {
-  "version": 202503170,
+  "version": 202503171,
   "playlist": false,
   "clients": [
     {
@@ -22,7 +22,7 @@
     {
       "key": "vipho",
       "type": "link",
-      "time": 60,
+      "time": 172800,
       "os": "android",
       "title": "Help",
       "message": "I've published Vipho, a collection of addictive Puzzle Games using your own Videos & Photos!.\nI would really appreciate it if you could try it out and leave a review. 🙏",
