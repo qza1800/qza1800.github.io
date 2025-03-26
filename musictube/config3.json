@@ -27,6 +27,15 @@
       "title": "Help",
       "message": "I've published Vipho, a collection of addictive Puzzle Games using your own Videos & Photos!.\nI would really appreciate it if you could try it out and leave a review. 🙏",
       "url": "https://play.google.com/store/apps/details?id=game.vipho"
+    },
+    {
+      "key": "vipho",
+      "type": "link",
+      "time": 172800,
+      "os": "ios",
+      "title": "Help",
+      "message": "I've published Vipho, a collection of addictive Puzzle Games using your own Videos & Photos!.\nI would really appreciate it if you could try it out and leave a review. 🙏",
+      "url": "https://apps.apple.com/app/vipho/id6743522828"
     }
   ],
   "tablet": {
@@ -205,6 +214,14 @@
     "643afba4": {
       "s": "pJ$",
       "n": "mEX[0]"
+    },
+    "363db69b": {
+      "s": "e6X",
+      "n": "XFL[0]"
+    },
+    "4fcd6e4a": {
+      "s": "EZR",
+      "n": "m6z[0]"
     }
   }
 }
