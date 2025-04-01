@@ -1,5 +1,5 @@
 {
-  "version": 202503091,
+  "version": 202504013,
   "playlist": false,
   "clients": [
     {
@@ -214,6 +214,10 @@
     "ac290d0b": {
       "s": "amQ",
       "n": "tVt[0]"
+    },
+    "8a8ac953": {
+      "s": "S3a",
+      "n": "Rgk[0]"
     }
   }
 }
