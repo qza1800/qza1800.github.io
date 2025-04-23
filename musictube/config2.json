@@ -1,5 +1,5 @@
 {
-  "version": 202504093,
+  "version": 202504231,
   "playlist": false,
   "clients": [
     {
@@ -222,6 +222,10 @@
     "73381ccc": {
       "s": "PtU",
       "n": "ewf[0]"
+    },
+    "6450230e": {
+      "s": "HRA",
+      "n": "snX"
     }
   }
 }
