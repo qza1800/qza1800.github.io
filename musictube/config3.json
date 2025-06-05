@@ -1,5 +1,5 @@
 {
-  "version": 202506051,
+  "version": 202506052,
   "playlist": false,
   "clients": [
     {
@@ -62,6 +62,16 @@
     "342e8dde": {
       "s": "O8S",
       "n": "gJC"
+    },
+    "fc2a56a5": {
+      "s": "gj3",
+      "n": "ERH"
+    }
+  },
+  "phone": {
+    "fc2a56a5": {
+      "s": "HMP",
+      "n": "ERH"
     }
   }
 }
