@@ -1,5 +1,5 @@
 {
-  "version": 202507281,
+  "version": 202509181,
   "playlist": false,
   "clients": [
     {
@@ -20,22 +20,22 @@
   },
   "messages": [
     {
-      "key": "vipho",
+      "key": "error-sc",
       "type": "link",
       "time": 172800,
       "os": "android",
-      "title": "Help",
-      "message": "I've published Vipho, a collection of addictive Puzzle Games using your own Videos & Photos!.\nI would really appreciate it if you could try it out and leave a review. 🙏",
-      "url": "https://play.google.com/store/apps/details?id=game.vipho"
+      "title": "Note",
+      "message": "If you get error: 'Cannot get sc', please try uninstalling and reinstalling again. I'll fix it soon.",
+      "url": "https://play.google.com/store/apps/details?id=com.qzaqwa.musictube.reborn"
     },
     {
-      "key": "vipho",
+      "key": "error-sc",
       "type": "link",
       "time": 172800,
       "os": "ios",
-      "title": "Help",
-      "message": "I've published Vipho, a collection of addictive Puzzle Games using your own Videos & Photos!.\nI would really appreciate it if you could try it out and leave a review. 🙏",
-      "url": "https://apps.apple.com/app/vipho/id6743522828"
+      "title": "Note",
+      "message": "If you get error: 'Cannot get sc', please try uninstalling and reinstalling again. I'll fix it soon.",
+      "url": "https://apps.apple.com/app/musictube-listen-to-videos/id6670187888"
     }
   ],
   "tablet": {
