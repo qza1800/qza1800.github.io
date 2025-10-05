@@ -1,5 +1,5 @@
 {
-  "version": 202509291,
+  "version": 202510051,
   "forcePlayer": "0004de42",
   "playlist": false,
   "clients": [
@@ -21,13 +21,13 @@
   },
   "messages": [
     {
-      "key": "error-sc",
+      "key": "videotube",
       "type": "link",
       "time": 172800,
       "os": "android",
-      "title": "Note",
-      "message": "If you get error: 'Cannot get sc', please try uninstalling and reinstalling again. I'll fix it soon.",
-      "url": "https://play.google.com/store/apps/details?id=com.qzaqwa.musictube.reborn"
+      "title": "🚀 Introducing VideoTube!",
+      "message": "Enjoy watching videos without video ads from YouTube",
+      "url": "https://play.google.com/store/apps/details?id=video.tube.rn"
     },
     {
       "key": "error-sc",
