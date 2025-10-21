@@ -1,5 +1,5 @@
 {
-  "version": 202510051,
+  "version": 202510211,
   "forcePlayer": "0004de42",
   "playlist": false,
   "clients": [
@@ -21,12 +21,12 @@
   },
   "messages": [
     {
-      "key": "videotube",
+      "key": "video.tube",
       "type": "link",
       "time": 172800,
       "os": "android",
       "title": "🚀 Introducing VideoTube!",
-      "message": "Enjoy watching videos without video ads from YouTube",
+      "message": "Enjoy watching videos without ads: 🚫 Ad-free playback, 🎵 Background play (keep playing when the screen is off), 🪟 Floating player (watch while using other apps), ⏰ Sleep timer, ⚡ Speed control, 🔁 Loop one video, 🧩 Show or hide Shorts and comments, 🌙 Dark or light theme.",
       "url": "https://play.google.com/store/apps/details?id=video.tube.rn"
     },
     {
