@@ -1,5 +1,5 @@
 {
-  "version": 202510221,
+  "version": 202510231,
   "forcePlayer": "0004de42",
   "playlist": false,
   "clients": [
@@ -28,15 +28,6 @@
       "title": "🚀 Introducing VideoTube!",
       "message": "Enjoy watching videos without ads: 🚫 Ad-free playback, 🎵 Background play (keep playing when the screen is off), 🪟 Floating player (watch while using other apps), ⏰ Sleep timer, ⚡ Speed control, 🔁 Loop one video, 🧩 Show or hide Shorts and comments, 🌙 Dark or light theme.",
       "url": "https://play.google.com/store/apps/details?id=video.tube.rn"
-    },
-    {
-      "key": "error-sc",
-      "type": "link",
-      "time": 172800,
-      "os": "ios",
-      "title": "Note",
-      "message": "If you get error: 'Cannot get sc', please try uninstalling and reinstalling again. I'll fix it soon.",
-      "url": "https://apps.apple.com/app/musictube-listen-to-videos/id6670187888"
     }
   ],
   "tablet": {
