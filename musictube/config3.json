@@ -1,5 +1,5 @@
 {
-  "version": 202510242,
+  "version": 202510243,
   "forcePlayer": "0004de42",
   "playlist": false,
   "clients": [
@@ -12,8 +12,8 @@
     }
   ],
   "c_tv": {
-    "clientName": "ANDROID",
-    "clientVersion": "20.10.38"
+    "clientName": "TVHTML5",
+    "clientVersion": "7.20250923.13.00"
   },
   "c_mweb": {
     "clientName": "MWEB",
