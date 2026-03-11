@@ -1,5 +1,5 @@
 {
-  "version": 202601291,
+  "version": 202603111,
   "playlist": false,
   "clients": [
     {
@@ -12,7 +12,7 @@
   ],
   "c_tv": {
     "clientName": "ANDROID_VR",
-    "clientVersion": "1.71.26"
+    "clientVersion": "1.65.10"
   },
   "c_mweb": {
     "clientName": "MWEB",
