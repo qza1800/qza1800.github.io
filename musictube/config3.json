@@ -1,5 +1,5 @@
 {
-  "version": 202607211,
+  "version": 202609021,
   "playlist": false,
   "clients": [
     {
@@ -20,13 +20,13 @@
   },
   "messages": [
     {
-      "key": "video.tube",
+      "key": "mine.duel",
       "type": "link",
       "time": 172800,
       "os": "android",
-      "title": "🚀 Introducing VideoTube!",
-      "message": "Enjoy watching videos without ads: 🚫 Ad-free playback, 🎵 Background play (keep playing when the screen is off), 🪟 Floating player (watch while using other apps), ⏰ Sleep timer, ⚡ Speed control, 🔁 Loop one video, 🧩 Show or hide Shorts and comments, 🌙 Dark or light theme.",
-      "url": "https://play.google.com/store/apps/details?id=video.tube.rn"
+      "title": "🎮 Meet MultiDuel Online!",
+      "message": "Challenge your friends in fast, fun 2-player online duels! ⚔️\nPlay Mine Duel, Icon Rush, Sudoku, and more mini games coming soon.\n\n🏆 Think fast. Play smart. Beat your friends!\n\nDownload MultiDuel Online and start your duel!",
+      "url": "https://play.google.com/store/apps/details?id=mine.duel"
     }
   ],
   "tablet": {
